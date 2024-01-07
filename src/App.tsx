@@ -2,23 +2,46 @@ import './App.css'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 
-type TagType = {
-    id: number,
-    title: string
+
+export type GetTodoListsResponce = {
+    pagesCount: number
+    page: number
+    pageSize: number
+    totalCount: number
+    items: TodoListType[]
 }
 
-type TagsDataType = any[]
+export type TodoListType = {
+    isImportant: boolean
+    id: string
+    title: string
+    description: string
+    addedDate: string
+    order: number
+    images: ImagesType
+}
+
+export type ImagesType = {
+    main: ImgType[]
+}
+
+export type ImgType = {
+    url: string
+    width: number
+    height: number
+    fileSize: number
+}
 
 
 function App() {
 
 
-    const [tags, setTags] = useState<TagsDataType>([])
+    const [todoLists, setTodoLists] = useState<TodoListType[]>([])
 
     useEffect(() => {
-        axios.get('https://todolists.samuraijs.com/api/1.0/todolists').then(responce => {
+        axios.get<GetTodoListsResponce>('https://todolists.samuraijs.com/api/1.0/todolists').then(responce => {
             console.log(responce.data)
-            setTags(responce.data.items)
+            setTodoLists(responce.data.items)
         })
     }, [])
 
@@ -26,11 +49,14 @@ function App() {
     return (
         <div>
             <ul>
+                
                 {
-                    tags.map(el => {
+                    todoLists.map(el => {
+                        const imageUrl = el.images.main.length > 1 ? el.images.main[1]?.url : 'https://placehold.co/48'
                         return (
                             <li key={el.id}>
-                                <input type="checkbox" checked={el.isImportant}/>
+                                <img src={imageUrl} alt=""/>
+                                {el.isImportant ? '😜' : '🤢'}
                                 <h3>{el.title}</h3>
                                 <p>{el.description}</p>
                             </li>
@@ -48,7 +74,7 @@ export default App
 // -------------------------------------------------------------------
 
 
-// ПОлучали данные с задержкой
+// Получали данные с задержкой
 /*
         setTimeout(() => {
             setTags([
@@ -61,5 +87,7 @@ export default App
             ])
         }, 2000)
                  */
+
+// <input type="checkbox" checked={el.isImportant}/>
 
 
