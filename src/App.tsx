@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+type TagType = {
+    id: number,
+    title: string
+}
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+type TagsDataType = TagType[]
+
+
+function App() {
+
+    const tags: TagsDataType = [
+        {id: 1, title: 'css'},
+        {id: 2, title: 'JS'},
+        {id: 3, title: 'React'},
+        {id: 4, title: 'HTML'},
+        {id: 5, title: 'NodeJS'},
+        {id: 6, title: 'SCSS'},
+    ]
+
+    return (
+        <div>
+            <ul>
+                {
+                    tags.map(el => {
+                        return <li id={el.id.toString()}>{el.title}</li>
+                    })
+                }
+            </ul>
+        </div>
+    )
 }
 
 export default App
