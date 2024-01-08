@@ -35,7 +35,6 @@ export type ImgType = {
 
 function App() {
 
-
     const [todoLists, setTodoLists] = useState<TodoListType[]>([])
 
     useEffect(() => {
@@ -49,7 +48,6 @@ function App() {
     return (
         <div>
             <ul>
-                
                 {
                     todoLists.map(el => {
                         const imageUrl = el.images.main.length > 1 ? el.images.main[1]?.url : 'https://placehold.co/48'
