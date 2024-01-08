@@ -3,29 +3,29 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 
 
-export type GetTodoListsResponce = {
+export type GetTodoListsResponceType = {
     pagesCount: number
     page: number
     pageSize: number
     totalCount: number
-    items: TodoListType[]
+    items: TodoListViewModel[]
 }
 
-export type TodoListType = {
+export type TodoListViewModel = {
     isImportant: boolean
     id: string
     title: string
     description: string
     addedDate: string
     order: number
-    images: ImagesType
+    images: TodoListImagesViewModel
 }
 
-export type ImagesType = {
-    main: ImgType[]
+export type TodoListImagesViewModel = {
+    main: PhotoSizeViewModel[]
 }
 
-export type ImgType = {
+export type PhotoSizeViewModel = {
     url: string
     width: number
     height: number
@@ -35,10 +35,10 @@ export type ImgType = {
 
 function App() {
 
-    const [todoLists, setTodoLists] = useState<TodoListType[]>([])
+    const [todoLists, setTodoLists] = useState<TodoListViewModel[]>([])
 
     useEffect(() => {
-        axios.get<GetTodoListsResponce>('https://todolists.samuraijs.com/api/1.0/todolists').then(responce => {
+        axios.get<GetTodoListsResponceType>('https://todolists.samuraijs.com/api/1.0/todolists').then(responce => {
             console.log(responce.data)
             setTodoLists(responce.data.items)
         })
